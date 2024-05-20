@@ -3,3 +3,4 @@ of.entitlements
 openFrameworks-Info.plist
 project.xcconfig
 .vscode
+.DS_Store
