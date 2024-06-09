@@ -18,6 +18,7 @@ void ofApp::setup(){
 
     std::string name_csv             = "data_H2O2_Ignition_X_wo_header.csv";
     std::string name_csv_species2    = "name_species2.csv";
+    std::string name_csv_positions   = "data_positions.csv";
     std::string name_csv_species     = "name_species.csv";
     std::string name_csv_time        = "data_H2O2_Ignition_time.csv";
     std::string name_csv_temperature = "data_H2O2_Ignition_T.csv";
@@ -27,12 +28,8 @@ void ofApp::setup(){
     } else {
         ofLogError("ofApp::setup") << "Unable to load CSV file.";
     }
-
-    if(csv_species.load(name_csv_species2)) {
-        ofLogNotice("ofApp::setup") << "CSV loaded successfully.";
-    } else {
-        ofLogError("ofApp::setup") << "Unable to load CSV file.";
-    }
+    
+    loadData(name_csv_positions, positionMat);
 
     loadData(name_csv_species, speciesNameVec);
     
@@ -55,7 +52,7 @@ void ofApp::draw(){
     
     ofBackground(255); // 背景を白色に設定
 
-	int num_species = csv_species.getNumCols();
+	int num_species = speciesNameVec.size();
 	// std::cout << num_species << std::endl;
 
 	for (int k=0; k!=num_species; k++) {
@@ -63,8 +60,8 @@ void ofApp::draw(){
 		// std::string name_species = csv_species[0][k];
 		std::string name_species = speciesNameVec[k];
 
-		float x = std::stof(csv_species[1][k])*ofGetWidth();
-		float y = std::stof(csv_species[2][k])*ofGetHeight();
+		float x = positionMat[k][0]*ofGetWidth();
+		float y = positionMat[k][1]*ofGetHeight();
 
 		float size = std::stof(csv[currentRow][k])*100000;
 		float radius = area2raduis(size);
@@ -139,6 +136,22 @@ void ofApp::loadData(const std::string& filePath, std::vector<std::string>& data
         ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
         for (int i = 0; i < csv.getNumRows(); i++) {
             data.push_back(csv[i][0]); // 0番目の列からデータを取得
+        }
+    } else {
+        ofLogError("ofApp::loadData") << "Unable to load CSV file from " << filePath;
+    }
+}
+
+void ofApp::loadData(const std::string& filePath, std::vector<std::vector<float>>& data) {
+    ofxCsv csv;
+    if (csv.load(filePath)) {
+        ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
+        for (int i = 0; i < csv.getNumRows(); i++) {
+            std::vector<float> row;
+            for (int j = 0; j < csv.getNumCols(i); j++) {
+                row.push_back(ofToFloat(csv[i][j])); // 各列からデータを取得
+            }
+            data.push_back(row);
         }
     } else {
         ofLogError("ofApp::loadData") << "Unable to load CSV file from " << filePath;

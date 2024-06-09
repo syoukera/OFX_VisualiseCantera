@@ -25,10 +25,13 @@ public:
     std::vector<std::string> speciesNameVec; // species nameのベクトル
     std::vector<float> tempVec; // temperatureのベクトル
     std::vector<float> timeVec; // timeのベクトル
+    std::vector<std::vector<float>> positionMat; // 2次元データのベクトル
+
 
 private:
     MyClass myClass;  // 新しいクラスのインスタンスを追加
     
     void loadData(const std::string& filePath, std::vector<float>& data); // floatデータ読み込み関数
     void loadData(const std::string& filePath, std::vector<std::string>& data); // stringデータ読み込み関数
+    void loadData(const std::string& filePath, std::vector<std::vector<float>>& data); // 2次元floatデータ読み込み関数
 };
