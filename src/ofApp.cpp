@@ -32,18 +32,10 @@ void ofApp::setup(){
     } else {
         ofLogError("ofApp::setup") << "Unable to load CSV file.";
     }
+    
+    loadData(name_csv_time, timeVec);
 
-    if(csv_time.load(name_csv_time)) {
-        ofLogNotice("ofApp::setup") << "CSV loaded successfully.";
-    } else {
-        ofLogError("ofApp::setup") << "Unable to load CSV file.";
-    }
-
-    if(csv_temperature.load(name_csv_temperature)) {
-        ofLogNotice("ofApp::setup") << "CSV loaded successfully.";
-    } else {
-        ofLogError("ofApp::setup") << "Unable to load CSV file.";
-    }
+    loadData(name_csv_temperature, tempVec);
 
     // 初期行を設定
     currentRow = 0;
@@ -95,17 +87,17 @@ void ofApp::draw(){
 	}
 
 	// std::string time_str = std::_Floating_to_string("%.3f", time);
-	std::string time_str = csv_time[currentRow][0];
-	std::string temperature_str = csv_temperature[currentRow][0];
+	// std::string time_str = csv_time[currentRow][0];
+	// std::string temperature_str = csv_temperature[currentRow][0];
 
-	float time = std::stof(time_str);
-	float temperature = std::stof(temperature_str);
+	// float time = std::stof(time_str);
+	// float temperature = std::stof(temperature_str);
 
 	verdana14.drawString("Time [s]:        ", 35, 35);
 	verdana14.drawString("Temperature [k]: ", 35, 65);
 
-	verdana14.drawString(time_str,        200, 35);
-	verdana14.drawString(temperature_str, 200, 65);
+	verdana14.drawString(ofToString(timeVec[currentRow]), 200, 35);
+	verdana14.drawString(ofToString(tempVec[currentRow]), 200, 65);
 }
 
 float ofApp::area2raduis(float area) {
@@ -122,4 +114,16 @@ void ofApp::drawSmoothCircle(float x, float y, float radius, int numSegments) {
         ofVertex(x + dx, y + dy);
     }
     ofEndShape(true); // trueを指定することで形を閉じます
+}
+
+void ofApp::loadData(const std::string& filePath, std::vector<float>& data) {
+    ofxCsv csv;
+    if (csv.load(filePath)) {
+        ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
+        for (int i = 0; i < csv.getNumRows(); i++) {
+            data.push_back(ofToFloat(csv[i][0])); // 0番目の列からデータを取得
+        }
+    } else {
+        ofLogError("ofApp::loadData") << "Unable to load CSV file from " << filePath;
+    }
 }

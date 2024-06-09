@@ -21,7 +21,12 @@ public:
     ofxCsv csv_temperature; // CSVデータを読み込むためのオブジェクト
 
     int currentRow; // 現在の行を追跡するための変数
+    
+    std::vector<float> tempVec; // temperatureのベクトル
+    std::vector<float> timeVec; // timeのベクトル
 
 private:
     MyClass myClass;  // 新しいクラスのインスタンスを追加
+    
+    void loadData(const std::string& filePath, std::vector<float>& data);
 };
