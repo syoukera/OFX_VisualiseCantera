@@ -28,6 +28,8 @@ void ofApp::setup(){
     } else {
         ofLogError("ofApp::setup") << "Unable to load CSV file.";
     }
+
+    loadData(name_csv, moleFractionMat);
     
     loadData(name_csv_positions, positionMat);
 
@@ -63,7 +65,8 @@ void ofApp::draw(){
 		float x = positionMat[k][0]*ofGetWidth();
 		float y = positionMat[k][1]*ofGetHeight();
 
-		float size = std::stof(csv[currentRow][k])*100000;
+        float moleFraction = moleFractionMat[currentRow][k];
+		float size = moleFraction*100000;
 		float radius = area2raduis(size);
 
 		// std::cout << k << ' ' << name_species << ' ' << x << ' ' 

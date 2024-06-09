@@ -25,7 +25,8 @@ public:
     std::vector<std::string> speciesNameVec; // species nameのベクトル
     std::vector<float> tempVec; // temperatureのベクトル
     std::vector<float> timeVec; // timeのベクトル
-    std::vector<std::vector<float>> positionMat; // 2次元データのベクトル
+    std::vector<std::vector<float>> positionMat; // XYのベクトル
+    std::vector<std::vector<float>> moleFractionMat; // モル分率のベクトル
 
 
 private:
