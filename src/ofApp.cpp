@@ -17,7 +17,8 @@ void ofApp::setup(){
     // std::string name_csv = "export_H2O2_Ignition_X_woHeader.csv";
 
     std::string name_csv             = "data_H2O2_Ignition_X_wo_header.csv";
-    std::string name_csv_species     = "name_species2.csv";
+    std::string name_csv_species2    = "name_species2.csv";
+    std::string name_csv_species     = "name_species.csv";
     std::string name_csv_time        = "data_H2O2_Ignition_time.csv";
     std::string name_csv_temperature = "data_H2O2_Ignition_T.csv";
 
@@ -27,11 +28,13 @@ void ofApp::setup(){
         ofLogError("ofApp::setup") << "Unable to load CSV file.";
     }
 
-    if(csv_species.load(name_csv_species)) {
+    if(csv_species.load(name_csv_species2)) {
         ofLogNotice("ofApp::setup") << "CSV loaded successfully.";
     } else {
         ofLogError("ofApp::setup") << "Unable to load CSV file.";
     }
+
+    loadData(name_csv_species, speciesNameVec);
     
     loadData(name_csv_time, timeVec);
 
@@ -57,7 +60,9 @@ void ofApp::draw(){
 
 	for (int k=0; k!=num_species; k++) {
 
-		std::string name_species = csv_species[0][k];
+		// std::string name_species = csv_species[0][k];
+		std::string name_species = speciesNameVec[k];
+
 		float x = std::stof(csv_species[1][k])*ofGetWidth();
 		float y = std::stof(csv_species[2][k])*ofGetHeight();
 
@@ -83,21 +88,21 @@ void ofApp::draw(){
 		// ofDrawCircle(x, y, radius); // 円を描画
 
 		ofSetColor(0);
-		verdana14.drawString(name_species, x, y);
+		verdana14.drawString(speciesNameVec[k], x, y);
 	}
 
 	// std::string time_str = std::_Floating_to_string("%.3f", time);
 	// std::string time_str = csv_time[currentRow][0];
 	// std::string temperature_str = csv_temperature[currentRow][0];
 
-	// float time = std::stof(time_str);
-	// float temperature = std::stof(temperature_str);
+	float time = timeVec[currentRow];
+	float temperature = tempVec[currentRow];
 
 	verdana14.drawString("Time [s]:        ", 35, 35);
 	verdana14.drawString("Temperature [k]: ", 35, 65);
 
-	verdana14.drawString(ofToString(timeVec[currentRow]), 200, 35);
-	verdana14.drawString(ofToString(tempVec[currentRow]), 200, 65);
+	verdana14.drawString(ofToString(time), 200, 35);
+	verdana14.drawString(ofToString(temperature), 200, 65);
 }
 
 float ofApp::area2raduis(float area) {
@@ -122,6 +127,18 @@ void ofApp::loadData(const std::string& filePath, std::vector<float>& data) {
         ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
         for (int i = 0; i < csv.getNumRows(); i++) {
             data.push_back(ofToFloat(csv[i][0])); // 0番目の列からデータを取得
+        }
+    } else {
+        ofLogError("ofApp::loadData") << "Unable to load CSV file from " << filePath;
+    }
+}
+
+void ofApp::loadData(const std::string& filePath, std::vector<std::string>& data) {
+    ofxCsv csv;
+    if (csv.load(filePath)) {
+        ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
+        for (int i = 0; i < csv.getNumRows(); i++) {
+            data.push_back(csv[i][0]); // 0番目の列からデータを取得
         }
     } else {
         ofLogError("ofApp::loadData") << "Unable to load CSV file from " << filePath;
