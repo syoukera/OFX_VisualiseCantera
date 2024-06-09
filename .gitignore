@@ -4,3 +4,4 @@ openFrameworks-Info.plist
 project.xcconfig
 .vscode
 .DS_Store
+*.exe
