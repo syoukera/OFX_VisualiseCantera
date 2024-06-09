@@ -1,5 +1,3 @@
-#pragma once
-
 #include "ofMain.h"
 #include "ofxCsv.h"
 #include "ofApp.h"
@@ -12,32 +10,15 @@ void ofApp::setup(){
 	verdana14.setLineHeight(18.0f);
 	verdana14.setLetterSpacing(1.037);
 
-    // CSVファイルの読み込み
-    // std::string name_csv = "export_H2O2_Ignition_X.csv";
-    // std::string name_csv = "export_H2O2_Ignition_X_woHeader.csv";
-
-    std::string name_csv             = "data_H2O2_Ignition_X_wo_header.csv";
-    std::string name_csv_species2    = "name_species2.csv";
-    std::string name_csv_positions   = "data_positions.csv";
-    std::string name_csv_species     = "name_species.csv";
-    std::string name_csv_time        = "data_H2O2_Ignition_time.csv";
-    std::string name_csv_temperature = "data_H2O2_Ignition_T.csv";
-
-    if(csv.load(name_csv)) {
-        ofLogNotice("ofApp::setup") << "CSV loaded successfully.";
-    } else {
-        ofLogError("ofApp::setup") << "Unable to load CSV file.";
-    }
-
-    loadData(name_csv, moleFractionMat);
+    loadData("data_H2O2_Ignition_X_wo_header.csv", moleFractionMat);
     
-    loadData(name_csv_positions, positionMat);
+    loadData("data_positions.csv", positionMat);
 
-    loadData(name_csv_species, speciesNameVec);
+    loadData("name_species.csv", speciesNameVec);
     
-    loadData(name_csv_time, timeVec);
+    loadData("data_H2O2_Ignition_time.csv", timeVec);
 
-    loadData(name_csv_temperature, tempVec);
+    loadData("data_H2O2_Ignition_T.csv", tempVec);
 
     // 初期行を設定
     currentRow = 0;
@@ -47,7 +28,7 @@ void ofApp::setup(){
 
 void ofApp::update(){
     // 行を進める
-    currentRow = (currentRow + 1) % csv.getNumRows();
+    currentRow = (currentRow + 1) % timeVec.size();
 }
 
 void ofApp::draw(){
@@ -125,7 +106,7 @@ void ofApp::loadData(const std::string& filePath, std::vector<float>& data) {
     ofxCsv csv;
     if (csv.load(filePath)) {
         ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
-        for (int i = 0; i < csv.getNumRows(); i++) {
+        for (size_t i = 0; i < csv.getNumRows(); i++) {
             data.push_back(ofToFloat(csv[i][0])); // 0番目の列からデータを取得
         }
     } else {
@@ -137,7 +118,7 @@ void ofApp::loadData(const std::string& filePath, std::vector<std::string>& data
     ofxCsv csv;
     if (csv.load(filePath)) {
         ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
-        for (int i = 0; i < csv.getNumRows(); i++) {
+        for (size_t i = 0; i < csv.getNumRows(); i++) {
             data.push_back(csv[i][0]); // 0番目の列からデータを取得
         }
     } else {
@@ -149,9 +130,9 @@ void ofApp::loadData(const std::string& filePath, std::vector<std::vector<float>
     ofxCsv csv;
     if (csv.load(filePath)) {
         ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
-        for (int i = 0; i < csv.getNumRows(); i++) {
+        for (size_t i = 0; i < csv.getNumRows(); i++) {
             std::vector<float> row;
-            for (int j = 0; j < csv.getNumCols(i); j++) {
+            for (size_t j = 0; j < csv.getNumCols(i); j++) {
                 row.push_back(ofToFloat(csv[i][j])); // 各列からデータを取得
             }
             data.push_back(row);

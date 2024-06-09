@@ -16,9 +16,9 @@ public:
 	ofTrueTypeFont	verdana14;
 
     ofxCsv csv; // CSVデータを読み込むためのオブジェクト
-    ofxCsv csv_species; // CSVデータを読み込むためのオブジェクト
-    ofxCsv csv_time; // CSVデータを読み込むためのオブジェクト
-    ofxCsv csv_temperature; // CSVデータを読み込むためのオブジェクト
+    // ofxCsv csv_species; // CSVデータを読み込むためのオブジェクト
+    // ofxCsv csv_time; // CSVデータを読み込むためのオブジェクト
+    // ofxCsv csv_temperature; // CSVデータを読み込むためのオブジェクト
 
     int currentRow; // 現在の行を追跡するための変数
     
