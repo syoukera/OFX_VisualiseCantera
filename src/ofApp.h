@@ -3,7 +3,8 @@
 #include "ofMain.h"
 #include "ofxCsv.h"
 #include "MyClass.h"
-#include "DataLoader.h"
+// #include "DataLoader.h"
+#include "BaseLoader.h"
 
 class ofApp : public ofBaseApp{
 public:
