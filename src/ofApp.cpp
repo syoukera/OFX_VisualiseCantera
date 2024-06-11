@@ -11,12 +11,11 @@ void ofApp::setup(){
 	verdana14.setLetterSpacing(1.037);
 
     loadData("data_H2O2_Ignition_X_wo_header.csv", moleFractionMat);
-    
-    loadData("data_positions.csv", positionMat);
 
-    loadData("name_species.csv", speciesNameVec);
-    
-    loadData("data_H2O2_Ignition_time.csv", timeVec);
+    // xデータのCSVファイルの読み込み
+    if (!positionDataLoader.loadData("data_positions.csv")) {
+        ofLogError("ofApp::setup") << "Failed to load data_positions.csv";
+    }
 
     // xデータのCSVファイルの読み込み
     if (!speciesNameDataLoader.loadData("name_species.csv")) {
@@ -41,7 +40,7 @@ void ofApp::setup(){
 
 void ofApp::update(){
     // 行を進める
-    currentRow = (currentRow + 1) % timeVec.size();
+    currentRow = (currentRow + 1) % timeDataLoader.getNumRows();
 }
 
 void ofApp::draw(){
@@ -53,8 +52,8 @@ void ofApp::draw(){
 
 	for (int k=0; k!=num_species; k++) {
 
-		float x = positionMat[k][0]*ofGetWidth();
-		float y = positionMat[k][1]*ofGetHeight();
+        float x = positionDataLoader.getRow(k)[0]*ofGetWidth();
+        float y = positionDataLoader.getRow(k)[1]*ofGetHeight();
 
         float moleFraction = moleFractionMat[currentRow][k];
 		float size = moleFraction*100000;
@@ -78,8 +77,6 @@ void ofApp::draw(){
 		drawSmoothCircle(x, y, radius, numSegments);
 		// ofDrawCircle(x, y, radius); // 円を描画
 
-		// std::string name_species = csv_species[0][k];
-		// std::string name_species = speciesNameDataLoader.getRow(k)[0];
         std::string name_species = speciesNameDataLoader.getLabel(k);
 
 		ofSetColor(0);

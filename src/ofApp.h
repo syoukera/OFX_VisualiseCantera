@@ -24,10 +24,6 @@ public:
 
     int currentRow; // 現在の行を追跡するための変数
     
-    std::vector<std::string> speciesNameVec; // species nameのベクトル
-    std::vector<float> tempVec; // temperatureのベクトル
-    std::vector<float> timeVec; // timeのベクトル
-    std::vector<std::vector<float>> positionMat; // XYのベクトル
     std::vector<std::vector<float>> moleFractionMat; // モル分率のベクトル
 
 private:
@@ -39,5 +35,6 @@ private:
 
     DataLoader tempDataLoader; // temperatureデータのローダー
     DataLoader timeDataLoader; // timeデータのローダー
+    DataLoader positionDataLoader; // timeデータのローダー
     LabelLoader speciesNameDataLoader; // speciesNameデータのローダー
 };
