@@ -1,5 +1,4 @@
 #include "ofMain.h"
-#include "ofxCsv.h"
 #include "ofApp.h"
 
 void ofApp::setup(){
@@ -37,8 +36,6 @@ void ofApp::setup(){
 
     // 初期行を設定
     currentRow = 0;
-
-    myClass.doSomething();  // 新しいクラスのメソッドを呼び出し
 }
 
 void ofApp::update(){
@@ -110,44 +107,4 @@ void ofApp::drawSmoothCircle(float x, float y, float radius, int numSegments) {
         ofVertex(x + dx, y + dy);
     }
     ofEndShape(true); // trueを指定することで形を閉じます
-}
-
-void ofApp::loadData(const std::string& filePath, std::vector<float>& data) {
-    ofxCsv csv;
-    if (csv.load(filePath)) {
-        ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
-        for (size_t i = 0; i < csv.getNumRows(); i++) {
-            data.push_back(ofToFloat(csv[i][0])); // 0番目の列からデータを取得
-        }
-    } else {
-        ofLogError("ofApp::loadData") << "Unable to load CSV file from " << filePath;
-    }
-}
-
-void ofApp::loadData(const std::string& filePath, std::vector<std::string>& data) {
-    ofxCsv csv;
-    if (csv.load(filePath)) {
-        ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
-        for (size_t i = 0; i < csv.getNumRows(); i++) {
-            data.push_back(csv[i][0]); // 0番目の列からデータを取得
-        }
-    } else {
-        ofLogError("ofApp::loadData") << "Unable to load CSV file from " << filePath;
-    }
-}
-
-void ofApp::loadData(const std::string& filePath, std::vector<std::vector<float>>& data) {
-    ofxCsv csv;
-    if (csv.load(filePath)) {
-        ofLogNotice("ofApp::loadData") << "CSV loaded successfully from " << filePath;
-        for (size_t i = 0; i < csv.getNumRows(); i++) {
-            std::vector<float> row;
-            for (size_t j = 0; j < csv.getNumCols(i); j++) {
-                row.push_back(ofToFloat(csv[i][j])); // 各列からデータを取得
-            }
-            data.push_back(row);
-        }
-    } else {
-        ofLogError("ofApp::loadData") << "Unable to load CSV file from " << filePath;
-    }
 }
