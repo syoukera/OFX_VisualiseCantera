@@ -10,24 +10,27 @@ void ofApp::setup(){
 	verdana14.setLineHeight(18.0f);
 	verdana14.setLetterSpacing(1.037);
 
-    loadData("data_H2O2_Ignition_X_wo_header.csv", moleFractionMat);
+    // mole fractionデータのCSVファイルの読み込み
+    if (!moleFractionDataLoader.loadData("data_H2O2_Ignition_X_wo_header.csv")) {
+        ofLogError("ofApp::setup") << "data_H2O2_Ignition_X_wo_header.csv";
+    }
 
-    // xデータのCSVファイルの読み込み
+    // positionデータのCSVファイルの読み込み
     if (!positionDataLoader.loadData("data_positions.csv")) {
         ofLogError("ofApp::setup") << "Failed to load data_positions.csv";
     }
 
-    // xデータのCSVファイルの読み込み
+    // spacies nameデータのCSVファイルの読み込み
     if (!speciesNameDataLoader.loadData("name_species.csv")) {
         ofLogError("ofApp::setup") << "Failed to load name_species.csv";
     }
 
-    // xデータのCSVファイルの読み込み
+    // timeデータのCSVファイルの読み込み
     if (!timeDataLoader.loadData("data_H2O2_Ignition_time.csv")) {
         ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_time.csv";
     }
 
-    // xデータのCSVファイルの読み込み
+    // temperatureデータのCSVファイルの読み込み
     if (!tempDataLoader.loadData("data_H2O2_Ignition_T.csv")) {
         ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_T.csv";
     }
@@ -55,7 +58,7 @@ void ofApp::draw(){
         float x = positionDataLoader.getRow(k)[0]*ofGetWidth();
         float y = positionDataLoader.getRow(k)[1]*ofGetHeight();
 
-        float moleFraction = moleFractionMat[currentRow][k];
+        float moleFraction = moleFractionDataLoader.getRow(currentRow)[k];
 		float size = moleFraction*100000;
 		float radius = area2raduis(size);
 
