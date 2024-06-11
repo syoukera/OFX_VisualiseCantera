@@ -18,7 +18,20 @@ void ofApp::setup(){
     
     loadData("data_H2O2_Ignition_time.csv", timeVec);
 
-    loadData("data_H2O2_Ignition_T.csv", tempVec);
+    // xデータのCSVファイルの読み込み
+    if (!speciesNameDataLoader.loadData("name_species.csv")) {
+        ofLogError("ofApp::setup") << "Failed to load name_species.csv";
+    }
+
+    // xデータのCSVファイルの読み込み
+    if (!timeDataLoader.loadData("data_H2O2_Ignition_time.csv")) {
+        ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_time.csv";
+    }
+
+    // xデータのCSVファイルの読み込み
+    if (!tempDataLoader.loadData("data_H2O2_Ignition_T.csv")) {
+        ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_T.csv";
+    }
 
     // 初期行を設定
     currentRow = 0;
@@ -35,13 +48,10 @@ void ofApp::draw(){
     
     ofBackground(255); // 背景を白色に設定
 
-	int num_species = speciesNameVec.size();
+	int num_species = speciesNameDataLoader.getNumRows();
 	// std::cout << num_species << std::endl;
 
 	for (int k=0; k!=num_species; k++) {
-
-		// std::string name_species = csv_species[0][k];
-		std::string name_species = speciesNameVec[k];
 
 		float x = positionMat[k][0]*ofGetWidth();
 		float y = positionMat[k][1]*ofGetHeight();
@@ -68,16 +78,16 @@ void ofApp::draw(){
 		drawSmoothCircle(x, y, radius, numSegments);
 		// ofDrawCircle(x, y, radius); // 円を描画
 
+		// std::string name_species = csv_species[0][k];
+		// std::string name_species = speciesNameDataLoader.getRow(k)[0];
+        std::string name_species = speciesNameDataLoader.getLabel(k);
+
 		ofSetColor(0);
-		verdana14.drawString(speciesNameVec[k], x, y);
+		verdana14.drawString(name_species, x, y);
 	}
 
-	// std::string time_str = std::_Floating_to_string("%.3f", time);
-	// std::string time_str = csv_time[currentRow][0];
-	// std::string temperature_str = csv_temperature[currentRow][0];
-
-	float time = timeVec[currentRow];
-	float temperature = tempVec[currentRow];
+	float time        = timeDataLoader.getRow(currentRow)[0];
+	float temperature = tempDataLoader.getRow(currentRow)[0];
 
 	verdana14.drawString("Time [s]:        ", 35, 35);
 	verdana14.drawString("Temperature [k]: ", 35, 65);

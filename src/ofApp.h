@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxCsv.h"
 #include "MyClass.h"
+#include "DataLoader.h"
 
 class ofApp : public ofBaseApp{
 public:
@@ -28,11 +29,14 @@ public:
     std::vector<std::vector<float>> positionMat; // XYのベクトル
     std::vector<std::vector<float>> moleFractionMat; // モル分率のベクトル
 
-
 private:
     MyClass myClass;  // 新しいクラスのインスタンスを追加
     
     void loadData(const std::string& filePath, std::vector<float>& data); // floatデータ読み込み関数
     void loadData(const std::string& filePath, std::vector<std::string>& data); // stringデータ読み込み関数
     void loadData(const std::string& filePath, std::vector<std::vector<float>>& data); // 2次元floatデータ読み込み関数
+
+    DataLoader tempDataLoader; // temperatureデータのローダー
+    DataLoader timeDataLoader; // timeデータのローダー
+    LabelLoader speciesNameDataLoader; // speciesNameデータのローダー
 };
