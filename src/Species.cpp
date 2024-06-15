@@ -12,7 +12,11 @@ void Species::draw(int timeIndex) const {
     float molFraction = molFractions[timeIndex];
     float radius = ofMap(molFraction, 0, 1, 0, 50); // モル分率を0から50の半径にマッピング
 
-    ofSetColor(0); // 色を黒に設定
+	float r = ofNoise(x, y)*255;
+	float g = ofNoise(x*100, y)*255;
+	float b = ofNoise(x, y*100)*255;
+	ofSetColor(r, g, b);
+
     ofDrawCircle(x, y, radius); // 円を描画
     ofDrawBitmapString(name, x - radius, y - radius - 10); // 化学種の名前を描画
 }
