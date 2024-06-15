@@ -10,6 +10,8 @@ public:
 
     void draw(int timeIndex) const;
 
+	ofTrueTypeFont	verdana14;
+
 private:
     std::string name; // 化学種の名前
     float x; // x座標

@@ -1,7 +1,15 @@
 #include "Species.h"
 
 Species::Species(const std::string& name, float x, float y, const std::vector<float>& molFractions)
-    : name(name), x(x), y(y), molFractions(molFractions) {}
+    : name(name), x(x), y(y), molFractions(molFractions) {
+
+	ofTrueTypeFont::setGlobalDpi(72);
+
+	verdana14.load("verdana.ttf", 14, true, true);
+	verdana14.setLineHeight(18.0f);
+	verdana14.setLetterSpacing(1.037);
+
+	}
 
 void Species::draw(int timeIndex) const {
     if (timeIndex < 0 || timeIndex >= molFractions.size()) {
@@ -20,8 +28,11 @@ void Species::draw(int timeIndex) const {
 
 	int numSegments = 100;
 	drawSmoothCircle(x, y, radius, numSegments);
-    ofDrawCircle(x, y, radius); // 円を描画
-    ofDrawBitmapString(name, x - radius, y - radius - 10); // 化学種の名前を描画
+    // ofDrawCircle(x, y, radius); // 円を描画
+	
+	ofSetColor(0);
+	verdana14.drawString(name, x - radius, y - radius - 10);
+    // ofDrawBitmapString(name, x - radius, y - radius - 10); // 化学種の名前を描画
 }
 
 float Species::area2raduis(float area) const {
