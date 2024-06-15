@@ -9,10 +9,7 @@ public:
     void setup();
     void update();
     void draw();
-
-	float area2raduis(float area);
-	void drawSmoothCircle(float x, float y, float radius, int numSegments);
-    
+ 
 	ofTrueTypeFont	verdana14;
 
     int currentRow; // 現在の行を追跡するための変数

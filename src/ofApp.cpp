@@ -50,42 +50,6 @@ void ofApp::draw(){
     
     ofBackground(255); // 背景を白色に設定
 
-	int num_species = speciesNameDataLoader.getNumRows();
-	// std::cout << num_species << std::endl;
-
-	for (int k=0; k!=num_species; k++) {
-
-        float x = positionDataLoader.getRow(k)[0]*ofGetWidth();
-        float y = positionDataLoader.getRow(k)[1]*ofGetHeight();
-
-        float moleFraction = moleFractionDataLoader.getRow(currentRow)[k];
-		float size = moleFraction*100000;
-		float radius = area2raduis(size);
-
-		// std::cout << k << ' ' << name_species << ' ' << x << ' ' 
-		// 		  << y << ' ' << radius << std::endl;
-		// std::cout << name_species << std::endl;	
-
-		float r = ofNoise(x, y)*255;
-		float g = ofNoise(x*100, y)*255;
-		float b = ofNoise(x, y*100)*255;
-
-		// std::cout << k << " " << name_species << " " << r << std::endl;
-
-		ofSetColor(r, g, b); // 色を黒に設定
-
-		// std::cout << ofNoise(x, y) << std::endl;
-		
-		int numSegments = 100;
-		// drawSmoothCircle(x, y, radius, numSegments);
-		// // ofDrawCircle(x, y, radius); // 円を描画
-
-        std::string name_species = speciesNameDataLoader.getLabel(k);
-
-		ofSetColor(0);
-		// verdana14.drawString(name_species, x, y);
-	}
-
 	float time        = timeDataLoader.getRow(currentRow)[0];
 	float temperature = tempDataLoader.getRow(currentRow)[0];
 
@@ -126,20 +90,4 @@ void ofApp::loadSpeciesData() {
 
         speciesList.emplace_back(name, x, y, molFractions);
     }
-}
-
-float ofApp::area2raduis(float area) {
-		float radius = std::sqrt(area/PI);
-		return radius;
-}
-
-void ofApp::drawSmoothCircle(float x, float y, float radius, int numSegments) {
-    ofBeginShape();
-    for (int i = 0; i!=numSegments; i++) {
-        float angle = TWO_PI * i / numSegments;
-        float dx = radius * cos(angle);
-        float dy = radius * sin(angle);
-        ofVertex(x + dx, y + dy);
-    }
-    ofEndShape(true); // trueを指定することで形を閉じます
 }
