@@ -15,4 +15,8 @@ private:
     float x; // x座標
     float y; // y座標
     std::vector<float> molFractions; // モル分率の時系列データ
+
+	float area2raduis(float area) const;
+	// void drawSmoothCircle(float x, float y, float radius, int numSegments) const;
+    void drawSmoothCircle(float x, float y, float radius, int numSegments = 100) const; // スムーズな円を描く関数
 };
