@@ -77,13 +77,13 @@ void ofApp::draw(){
 		// std::cout << ofNoise(x, y) << std::endl;
 		
 		int numSegments = 100;
-		drawSmoothCircle(x, y, radius, numSegments);
-		// ofDrawCircle(x, y, radius); // 円を描画
+		// drawSmoothCircle(x, y, radius, numSegments);
+		// // ofDrawCircle(x, y, radius); // 円を描画
 
         std::string name_species = speciesNameDataLoader.getLabel(k);
 
 		ofSetColor(0);
-		verdana14.drawString(name_species, x, y);
+		// verdana14.drawString(name_species, x, y);
 	}
 
 	float time        = timeDataLoader.getRow(currentRow)[0];
@@ -111,9 +111,13 @@ void ofApp::loadSpeciesData() {
     // ここでは、xとy座標、名前、およびモル分率のデータを手動で設定
     // 実際には、データローダーからこれらの情報を取得する
     for (size_t i = 0; i < numCols; ++i) {
-        std::string name = "Species " + std::to_string(i+1); // 仮の名前
-        float x = ofMap(i, 0, numCols - 1, 50, ofGetWidth() - 50); // x座標を計算
-        float y = ofGetHeight() / 2; // y座標を中央に設定
+        std::string name = speciesNameDataLoader.getLabel(i);
+
+        // float x = ofMap(i, 0, numCols - 1, 50, ofGetWidth() - 50); // x座標を計算
+        // float y = ofGetHeight() / 2; // y座標を中央に設定
+        float x = positionDataLoader.getRow(i)[0]*ofGetWidth();
+        float y = positionDataLoader.getRow(i)[1]*ofGetHeight();
+
         std::vector<float> molFractions;
 
         for (size_t j = 0; j < numRows; ++j) {
