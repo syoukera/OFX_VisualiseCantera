@@ -34,6 +34,9 @@ void ofApp::setup(){
         ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_T.csv";
     }
 
+    // Speciesデータの読み込み
+    loadSpeciesData();
+
     // 初期行を設定
     currentRow = 0;
 }
@@ -91,6 +94,34 @@ void ofApp::draw(){
 
 	verdana14.drawString(ofToString(time), 200, 35);
 	verdana14.drawString(ofToString(temperature), 200, 65);
+
+    // 各Speciesを描画
+    for (const auto& species : speciesList) {
+        species.draw(currentRow);
+    }
+
+}
+
+void ofApp::loadSpeciesData() {
+    // データローダーからSpeciesデータを読み込む
+    size_t numRows = moleFractionDataLoader.getNumRows();
+    size_t numCols = moleFractionDataLoader.getRow(0).size();
+
+    // 仮のデータとしてSpeciesのリストを作成
+    // ここでは、xとy座標、名前、およびモル分率のデータを手動で設定
+    // 実際には、データローダーからこれらの情報を取得する
+    for (size_t i = 0; i < numCols; ++i) {
+        std::string name = "Species " + std::to_string(i+1); // 仮の名前
+        float x = ofMap(i, 0, numCols - 1, 50, ofGetWidth() - 50); // x座標を計算
+        float y = ofGetHeight() / 2; // y座標を中央に設定
+        std::vector<float> molFractions;
+
+        for (size_t j = 0; j < numRows; ++j) {
+            molFractions.push_back(moleFractionDataLoader.getRow(j)[i]);
+        }
+
+        speciesList.emplace_back(name, x, y, molFractions);
+    }
 }
 
 float ofApp::area2raduis(float area) {

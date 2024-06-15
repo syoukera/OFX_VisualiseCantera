@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "BaseLoader.h"
+#include "Species.h"
 
 class ofApp : public ofBaseApp{
 public:
@@ -25,4 +26,8 @@ private:
     DataLoader positionDataLoader; // positionデータのローダー
     DataLoader moleFractionDataLoader; // mole fractionデータのローダー
     LabelLoader speciesNameDataLoader; // speciesNameデータのローダー
+
+    std::vector<Species> speciesList; // Speciesのリスト
+
+    void loadSpeciesData();
 };
