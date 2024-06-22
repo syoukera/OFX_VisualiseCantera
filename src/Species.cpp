@@ -19,7 +19,7 @@ void Species::draw(int timeIndex) const {
 
     float molFraction = molFractions[timeIndex];
     float area = ofMap(molFraction, 0, 1, 0, 100000); // モル分率を0から50の半径にマッピング
-	float radius = area2raduis(area);
+	float radius = area2radius(area);
 
 	float r = ofNoise(x, y)*255;
 	float g = ofNoise(x*100, y)*255;
@@ -35,7 +35,34 @@ void Species::draw(int timeIndex) const {
     // ofDrawBitmapString(name, x - radius, y - radius - 10); // 化学種の名前を描画
 }
 
-float Species::area2raduis(float area) const {
+bool Species::isMouseOver(float mouseX, float mouseY, int timeIndex) const {
+    if (timeIndex < 0 || timeIndex >= molFractions.size()) {
+        return false;
+    }
+
+    float molFraction = molFractions[timeIndex];
+    // float area = molFraction * 100.0f; // 仮のスケーリングファクタ
+    float area = ofMap(molFraction, 0, 1, 0, 100000); // モル分率を0から50の半径にマッピング
+    float radius = area2radius(area); // 面積を半径に変換
+
+    float dx = mouseX - x;
+    float dy = mouseY - y;
+    float distance = sqrt(dx * dx + dy * dy);
+    return distance <= radius;
+}
+
+void Species::drawMouseOverInfo(float mouseX, float mouseY, int timeIndex) const {
+    if (timeIndex < 0 || timeIndex >= molFractions.size()) {
+        return;
+   }
+
+    float molFraction = molFractions[timeIndex];
+    std::string info = "Mol Fraction: " + ofToString(molFraction, 4);
+    ofSetColor(255, 0, 0); // 色を赤に設定
+    ofDrawBitmapString(info, mouseX + 10, mouseY - 10);
+}
+
+float Species::area2radius(float area) const {
 		float radius = std::sqrt(area/PI);
 		return radius;
 }

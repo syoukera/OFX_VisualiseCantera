@@ -9,6 +9,8 @@ public:
     Species(const std::string& name, float x, float y, const std::vector<float>& molFractions);
 
     void draw(int timeIndex) const;
+    bool isMouseOver(float mouseX, float mouseY, int timeIndex) const;
+    void drawMouseOverInfo(float mouseX, float mouseY, int timeIndex) const;
 
 	ofTrueTypeFont	verdana14;
 
@@ -18,7 +20,6 @@ private:
     float y; // y座標
     std::vector<float> molFractions; // モル分率の時系列データ
 
-	float area2raduis(float area) const;
-	// void drawSmoothCircle(float x, float y, float radius, int numSegments) const;
+	float area2radius(float area) const;
     void drawSmoothCircle(float x, float y, float radius, int numSegments = 100) const; // スムーズな円を描く関数
 };
