@@ -5,3 +5,5 @@ project.xcconfig
 .vscode
 .DS_Store
 *.exe
+bin/*
+!bin/data
