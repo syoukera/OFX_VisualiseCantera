@@ -62,6 +62,9 @@ void ofApp::draw(){
     // 各Speciesを描画
     for (const auto& species : speciesList) {
         species.draw(currentRow);
+        if (species.isMouseOver(mouseX, mouseY, currentRow)) {
+            species.drawMouseOverInfo(mouseX, mouseY, currentRow);
+        }
     }
 
 }
