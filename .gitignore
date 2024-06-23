@@ -7,3 +7,4 @@ project.xcconfig
 *.exe
 bin/*
 !bin/data
+*.csv
