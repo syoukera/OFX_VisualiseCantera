@@ -10,27 +10,27 @@ void ofApp::setup(){
 	verdana14.setLetterSpacing(1.037);
 
     // mole fractionデータのCSVファイルの読み込み
-    if (!moleFractionDataLoader.loadData("data_H2O2_Ignition_X_wo_header.csv")) {
+    if (!moleFractionDataLoader.loadData("H2O2_X.csv")) {
         ofLogError("ofApp::setup") << "data_H2O2_Ignition_X_wo_header.csv";
     }
 
     // positionデータのCSVファイルの読み込み
-    if (!positionDataLoader.loadData("data_positions.csv")) {
+    if (!positionDataLoader.loadData("H2O2_positions.csv")) {
         ofLogError("ofApp::setup") << "Failed to load data_positions.csv";
     }
 
     // spacies nameデータのCSVファイルの読み込み
-    if (!speciesNameDataLoader.loadData("name_species.csv")) {
+    if (!speciesNameDataLoader.loadData("H2O2_name_species.csv")) {
         ofLogError("ofApp::setup") << "Failed to load name_species.csv";
     }
 
     // timeデータのCSVファイルの読み込み
-    if (!timeDataLoader.loadData("data_H2O2_Ignition_time.csv")) {
+    if (!timeDataLoader.loadData("H2O2_time.csv")) {
         ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_time.csv";
     }
 
     // temperatureデータのCSVファイルの読み込み
-    if (!tempDataLoader.loadData("data_H2O2_Ignition_T.csv")) {
+    if (!tempDataLoader.loadData("H2O2_T.csv")) {
         ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_T.csv";
     }
 
