@@ -11,6 +11,7 @@ public:
     void draw(int timeIndex) const;
     bool isMouseOver(float mouseX, float mouseY, int timeIndex) const;
     void drawMouseOverInfo(float mouseX, float mouseY, int timeIndex) const;
+    const std::string& getName() const; // getNameメソッドの追加
 
 	ofTrueTypeFont	verdana14;
 

@@ -62,6 +62,10 @@ void Species::drawMouseOverInfo(float mouseX, float mouseY, int timeIndex) const
     ofDrawBitmapString(info, mouseX + 10, mouseY - 10);
 }
 
+const std::string& Species::getName() const {
+    return name;
+}
+
 float Species::area2radius(float area) const {
 		float radius = std::sqrt(area/PI);
 		return radius;
