@@ -1,4 +1,3 @@
-#include "ofMain.h"
 #include "ofApp.h"
 
 void ofApp::setup(){
@@ -36,9 +35,15 @@ void ofApp::setup(){
 
     // Speciesデータの読み込み
     loadSpeciesData();
-
+    
+    // GUIの設定
+    setupGui();
+    
     // 初期行を設定
     currentRow = 0;
+
+    // マウス座標の初期化
+    mouseX = mouseY = 0;
 }
 
 void ofApp::update(){
@@ -47,8 +52,10 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-    
     ofBackground(255); // 背景を白色に設定
+
+    // GUIの描画
+    gui.draw();
 
 	float time        = timeDataLoader.getRow(currentRow)[0];
 	float temperature = tempDataLoader.getRow(currentRow)[0];
@@ -59,14 +66,21 @@ void ofApp::draw(){
 	verdana14.drawString(ofToString(time), 200, 35);
 	verdana14.drawString(ofToString(temperature), 200, 65);
 
+
     // 各Speciesを描画
-    for (const auto& species : speciesList) {
-        species.draw(currentRow);
-        if (species.isMouseOver(mouseX, mouseY, currentRow)) {
-            species.drawMouseOverInfo(mouseX, mouseY, currentRow);
+    for (size_t i = 0; i < speciesList.size(); ++i) {
+        if (speciesToggles[i]) { // トグルボタンがオンの場合に描画
+            speciesList[i].draw(currentRow);
+            if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
+                speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
+            }
         }
     }
+}
 
+void ofApp::mouseMoved(int x, int y){
+    mouseX = x;
+    mouseY = y;
 }
 
 void ofApp::loadSpeciesData() {
@@ -75,16 +89,13 @@ void ofApp::loadSpeciesData() {
     size_t numCols = moleFractionDataLoader.getRow(0).size();
 
     // 仮のデータとしてSpeciesのリストを作成
-    // ここでは、xとy座標、名前、およびモル分率のデータを手動で設定
-    // 実際には、データローダーからこれらの情報を取得する
     for (size_t i = 0; i < numCols; ++i) {
         std::string name = speciesNameDataLoader.getLabel(i);
 
-        // float x = ofMap(i, 0, numCols - 1, 50, ofGetWidth() - 50); // x座標を計算
-        // float y = ofGetHeight() / 2; // y座標を中央に設定
         float x = positionDataLoader.getRow(i)[0]*ofGetWidth();
         float y = positionDataLoader.getRow(i)[1]*ofGetHeight();
-
+        // float x = ofMap(i, 0, numCols - 1, 50, ofGetWidth() - 50); // x座標を計算
+        // float y = ofGetHeight() / 2; // y座標を中央に設定
         std::vector<float> molFractions;
 
         for (size_t j = 0; j < numRows; ++j) {
@@ -92,5 +103,18 @@ void ofApp::loadSpeciesData() {
         }
 
         speciesList.emplace_back(name, x, y, molFractions);
+    }
+}
+
+void ofApp::setupGui() {
+    // GUIの初期設定
+    gui.setup();
+
+    // 各Speciesのトグルボタンを設定
+    for (const auto& species : speciesList) {
+        ofParameter<bool> toggle;
+        toggle.set(species.getName(), true); // 初期状態をオンに設定
+        gui.add(toggle); // トグルボタンをGUIに追加
+        speciesToggles.push_back(toggle);
     }
 }
