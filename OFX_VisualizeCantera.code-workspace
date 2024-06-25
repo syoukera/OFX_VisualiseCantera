@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "${workspaceRoot}/../../../../libs/openFrameworks"
+		},
+		{
+			"path": "${workspaceRoot}/../../../../addons/ofxCsv"
+		},
+		{
+			"path": "${workspaceRoot}/../../../../addons/ofxGui"
+		}
+	],
+	"openFrameworksProjectGeneratorVersion": "34",
+	"settings": {}
+}
