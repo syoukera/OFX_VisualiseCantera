@@ -31,10 +31,13 @@ private:
     float mouseX, mouseY; // マウスのx, y座標
 
     ofxPanel gui; // GUIパネル
-    std::vector<ofParameter<bool>> speciesToggles; // 各Speciesの表示切替用トグルボタン
-    std::vector<std::shared_ptr<ofEventListener>> toggleListeners; // トグルリスナーのリスト
+    std::vector<ofParameter<bool>> speciesTogglesStart; // Start化学種の表示切替用トグルボタン
+    std::vector<ofParameter<bool>> speciesTogglesEnd; // End化学種の表示切替用トグルボタン
+    std::vector<std::shared_ptr<ofEventListener>> toggleListenersStart; // Startトグルリスナーのリスト
+    std::vector<std::shared_ptr<ofEventListener>> toggleListenersEnd; // Endトグルリスナーのリスト
 
     void loadSpeciesData();
     void setupGui();
-    void toggleChanged(bool & value, int index);
+    void toggleChangedStart(bool & value, int index);
+    void toggleChangedEnd(bool & value, int index);
 };

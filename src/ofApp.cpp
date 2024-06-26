@@ -67,9 +67,19 @@ void ofApp::draw(){
 	verdana14.drawString(ofToString(temperature), 200, 65);
 
 
-    // 各Speciesを描画
+    // StartのSpeciesを描画
     for (size_t i = 0; i < speciesList.size(); ++i) {
-        if (speciesToggles[i]) { // トグルボタンがオンの場合に描画
+        if (speciesTogglesStart[i]) { // Startトグルボタンがオンの場合に描画
+            speciesList[i].draw(currentRow);
+            if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
+                speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
+            }
+        }
+    }
+
+    // EndのSpeciesを描画
+    for (size_t i = 0; i < speciesList.size(); ++i) {
+        if (speciesTogglesEnd[i]) { // Endトグルボタンがオンの場合に描画
             speciesList[i].draw(currentRow);
             if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
                 speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
@@ -110,26 +120,49 @@ void ofApp::setupGui() {
     // GUIの初期設定
     gui.setup();
 
-    // 各Speciesのトグルボタンを設定
+    // StartのSpeciesのトグルボタンを設定
     for (size_t i = 0; i < speciesList.size(); ++i) {
-        ofParameter<bool> toggle;
-        toggle.set(speciesList[i].getName(), false); // 初期状態をオフに設定
-        speciesToggles.push_back(toggle);
-        gui.add(toggle);
-        auto listener = std::make_shared<ofEventListener>(toggle.newListener([this, i](bool & value) {
-            toggleChanged(value, i);
+        ofParameter<bool> toggleStart;
+        toggleStart.set(speciesList[i].getName() + " Start", false); // 初期状態をオフに設定
+        speciesTogglesStart.push_back(toggleStart);
+        gui.add(toggleStart);
+        auto listenerStart = std::make_shared<ofEventListener>(toggleStart.newListener([this, i](bool & value) {
+            toggleChangedStart(value, i);
         }));
-        toggleListeners.push_back(listener);
+        toggleListenersStart.push_back(listenerStart);
+    }
+
+    // EndのSpeciesのトグルボタンを設定
+    for (size_t i = 0; i < speciesList.size(); ++i) {
+        ofParameter<bool> toggleEnd;
+        toggleEnd.set(speciesList[i].getName() + " End", false); // 初期状態をオフに設定
+        speciesTogglesEnd.push_back(toggleEnd);
+        gui.add(toggleEnd);
+        auto listenerEnd = std::make_shared<ofEventListener>(toggleEnd.newListener([this, i](bool & value) {
+            toggleChangedEnd(value, i);
+        }));
+        toggleListenersEnd.push_back(listenerEnd);
     }
 }
 
-void ofApp::toggleChanged(bool & value, int index) {
+void ofApp::toggleChangedStart(bool & value, int index) {
     if (value) {
-        for (size_t i = 0; i < speciesToggles.size(); ++i) {
+        for (size_t i = 0; i < speciesTogglesStart.size(); ++i) {
             if (i != index) {
-                speciesToggles[i].setWithoutEventNotifications(false); // 他のトグルをオフにする
+                speciesTogglesStart[i].setWithoutEventNotifications(false); // 他のトグルをオフにする
             }
         }
-        ofLogNotice("ofApp") << "Toggle changed: Only one species can be active at a time";
+        ofLogNotice("ofApp") << "Start Toggle changed: Only one start species can be active at a time";
+    }
+}
+
+void ofApp::toggleChangedEnd(bool & value, int index) {
+    if (value) {
+        for (size_t i = 0; i < speciesTogglesEnd.size(); ++i) {
+            if (i != index) {
+                speciesTogglesEnd[i].setWithoutEventNotifications(false); // 他のトグルをオフにする
+            }
+        }
+        ofLogNotice("ofApp") << "End Toggle changed: Only one end species can be active at a time";
     }
 }
