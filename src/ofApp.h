@@ -32,7 +32,9 @@ private:
 
     ofxPanel gui; // GUIパネル
     std::vector<ofParameter<bool>> speciesToggles; // 各Speciesの表示切替用トグルボタン
+    std::vector<std::shared_ptr<ofEventListener>> toggleListeners; // トグルリスナーのリスト
 
     void loadSpeciesData();
     void setupGui();
+    void toggleChanged(bool & value, int index);
 };

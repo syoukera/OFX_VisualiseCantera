@@ -111,10 +111,25 @@ void ofApp::setupGui() {
     gui.setup();
 
     // 各Speciesのトグルボタンを設定
-    for (const auto& species : speciesList) {
+    for (size_t i = 0; i < speciesList.size(); ++i) {
         ofParameter<bool> toggle;
-        toggle.set(species.getName(), true); // 初期状態をオンに設定
-        gui.add(toggle); // トグルボタンをGUIに追加
+        toggle.set(speciesList[i].getName(), false); // 初期状態をオフに設定
         speciesToggles.push_back(toggle);
+        gui.add(toggle);
+        auto listener = std::make_shared<ofEventListener>(toggle.newListener([this, i](bool & value) {
+            toggleChanged(value, i);
+        }));
+        toggleListeners.push_back(listener);
+    }
+}
+
+void ofApp::toggleChanged(bool & value, int index) {
+    if (value) {
+        for (size_t i = 0; i < speciesToggles.size(); ++i) {
+            if (i != index) {
+                speciesToggles[i].setWithoutEventNotifications(false); // 他のトグルをオフにする
+            }
+        }
+        ofLogNotice("ofApp") << "Toggle changed: Only one species can be active at a time";
     }
 }
