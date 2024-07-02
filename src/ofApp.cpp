@@ -146,7 +146,11 @@ void ofApp::setupGui() {
     // StartのSpeciesのトグルボタンを設定
     for (size_t i = 0; i < speciesList.size(); ++i) {
         ofParameter<bool> toggleStart;
-        toggleStart.set(speciesList[i].getName() + " Start", false); // 初期状態をオフに設定
+        if (i == 0) {
+            toggleStart.set(speciesList[i].getName() + " Start", true); // 初期状態をトゥルーに設定
+        } else {
+            toggleStart.set(speciesList[i].getName() + " Start", false); // 初期状態をオフに設定
+        }
         speciesTogglesStart.push_back(toggleStart);
         gui.add(toggleStart);
         auto listenerStart = std::make_shared<ofEventListener>(toggleStart.newListener([this, i](bool & value) {
@@ -158,7 +162,11 @@ void ofApp::setupGui() {
     // EndのSpeciesのトグルボタンを設定
     for (size_t i = 0; i < speciesList.size(); ++i) {
         ofParameter<bool> toggleEnd;
-        toggleEnd.set(speciesList[i].getName() + " End", false); // 初期状態をオフに設定
+        if (i == 1) {
+            toggleEnd.set(speciesList[i].getName() + " Start", true); // 初期状態をトゥルーに設定
+        } else {
+            toggleEnd.set(speciesList[i].getName() + " Start", false); // 初期状態をオフに設定
+        }
         speciesTogglesEnd.push_back(toggleEnd);
         gui.add(toggleEnd);
         auto listenerEnd = std::make_shared<ofEventListener>(toggleEnd.newListener([this, i](bool & value) {
