@@ -8,48 +8,39 @@ void ofApp::setup(){
 	verdana14.setLineHeight(18.0f);
 	verdana14.setLetterSpacing(1.037);
 
-    // mole fractionデータのCSVファイルの読み込み
+    // データのCSVファイルの読み込み
+
     if (!moleFractionDataLoader.loadData("H2O2_X.csv")) {
         ofLogError("ofApp::setup") << "H2O2_X.csv";
     }
 
-    // positionデータのCSVファイルの読み込み
     if (!positionDataLoader.loadData("H2O2_positions.csv")) {
         ofLogError("ofApp::setup") << "Failed to load H2O2_positions.csv";
     }
 
-    // spacies nameデータのCSVファイルの読み込み
     if (!speciesNameDataLoader.loadData("H2O2_name_species.csv")) {
         ofLogError("ofApp::setup") << "Failed to load H2O2_name_species.csv";
     }
 
-    // timeデータのCSVファイルの読み込み
     if (!timeDataLoader.loadData("H2O2_time.csv")) {
         ofLogError("ofApp::setup") << "Failed to load H2O2_time.csv";
     }
 
-    // temperatureデータのCSVファイルの読み込み
     if (!tempDataLoader.loadData("H2O2_T.csv")) {
         ofLogError("ofApp::setup") << "Failed to load H2O2_T.csv";
     }
 
-
-    // temperatureデータのCSVファイルの読み込み
     if (!ropDataLoader.loadData("H2O2_ROP.csv")) {
         ofLogError("ofApp::setup") << "Failed to load H2O2_ROP.csv";
     }
 
-    // temperatureデータのCSVファイルの読み込み
     if (!muDataLoader.loadData("H2O2_mu.csv")) {
         ofLogError("ofApp::setup") << "Failed to load H2O2_mu.csv";
     }
 
-    // temperatureデータのCSVファイルの読み込み
     if (!reactionEquationDataLoader.loadData("H2O2_ROP.csv")) {
         ofLogError("ofApp::setup") << "Failed to load H2O2_ROP.csv";
     }
-
-
 
     // Speciesデータの読み込み
     loadSpeciesData();
@@ -108,6 +99,20 @@ void ofApp::draw(){
         }
     }
 
+
+    // データローダーからmuデータを読み込む
+    size_t numRows = muDataLoader.getNumRows();
+    size_t numCols = muDataLoader.getRow(0).size();
+
+    // 仮のデータとしてSpeciesのリストを作成
+    for (size_t i = 0; i < numCols; ++i) {
+
+        float muStart = muDataLoader.getRow(startIndex)[i];
+        float muEnd = muDataLoader.getRow(endIndex)[i];
+
+        std::cout << i << " " << startIndex << " " << endIndex << " " 
+                  << muStart << " " << muEnd << std::endl;
+    }
     // std::cout << startIndex << " " << endIndex << std::endl;
 }
 
