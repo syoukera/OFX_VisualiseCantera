@@ -84,6 +84,7 @@ void ofApp::draw(){
 	verdana14.drawString(ofToString(time), 200, 35);
 	verdana14.drawString(ofToString(temperature), 200, 65);
 
+    size_t startIndex, endIndex;
 
     // StartのSpeciesを描画
     for (size_t i = 0; i < speciesList.size(); ++i) {
@@ -92,6 +93,7 @@ void ofApp::draw(){
             if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
                 speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
             }
+            startIndex = i;
         }
     }
 
@@ -102,8 +104,11 @@ void ofApp::draw(){
             if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
                 speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
             }
+            endIndex = i;
         }
     }
+
+    // std::cout << startIndex << " " << endIndex << std::endl;
 }
 
 void ofApp::mouseMoved(int x, int y){
