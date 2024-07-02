@@ -10,28 +10,46 @@ void ofApp::setup(){
 
     // mole fractionデータのCSVファイルの読み込み
     if (!moleFractionDataLoader.loadData("H2O2_X.csv")) {
-        ofLogError("ofApp::setup") << "data_H2O2_Ignition_X_wo_header.csv";
+        ofLogError("ofApp::setup") << "H2O2_X.csv";
     }
 
     // positionデータのCSVファイルの読み込み
     if (!positionDataLoader.loadData("H2O2_positions.csv")) {
-        ofLogError("ofApp::setup") << "Failed to load data_positions.csv";
+        ofLogError("ofApp::setup") << "Failed to load H2O2_positions.csv";
     }
 
     // spacies nameデータのCSVファイルの読み込み
     if (!speciesNameDataLoader.loadData("H2O2_name_species.csv")) {
-        ofLogError("ofApp::setup") << "Failed to load name_species.csv";
+        ofLogError("ofApp::setup") << "Failed to load H2O2_name_species.csv";
     }
 
     // timeデータのCSVファイルの読み込み
     if (!timeDataLoader.loadData("H2O2_time.csv")) {
-        ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_time.csv";
+        ofLogError("ofApp::setup") << "Failed to load H2O2_time.csv";
     }
 
     // temperatureデータのCSVファイルの読み込み
     if (!tempDataLoader.loadData("H2O2_T.csv")) {
-        ofLogError("ofApp::setup") << "Failed to load data_H2O2_Ignition_T.csv";
+        ofLogError("ofApp::setup") << "Failed to load H2O2_T.csv";
     }
+
+
+    // temperatureデータのCSVファイルの読み込み
+    if (!ropDataLoader.loadData("H2O2_ROP.csv")) {
+        ofLogError("ofApp::setup") << "Failed to load H2O2_ROP.csv";
+    }
+
+    // temperatureデータのCSVファイルの読み込み
+    if (!muDataLoader.loadData("H2O2_mu.csv")) {
+        ofLogError("ofApp::setup") << "Failed to load H2O2_mu.csv";
+    }
+
+    // temperatureデータのCSVファイルの読み込み
+    if (!reactionEquationDataLoader.loadData("H2O2_ROP.csv")) {
+        ofLogError("ofApp::setup") << "Failed to load H2O2_ROP.csv";
+    }
+
+
 
     // Speciesデータの読み込み
     loadSpeciesData();

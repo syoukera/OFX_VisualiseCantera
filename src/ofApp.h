@@ -27,6 +27,10 @@ private:
     DataLoader moleFractionDataLoader; // mole fractionデータのローダー
     LabelLoader speciesNameDataLoader; // speciesNameデータのローダー
 
+    DataLoader ropDataLoader; // ROPデータのローダー
+    DataLoader muDataLoader; // equivalent coeffisientsデータのローダー
+    LabelLoader reactionEquationDataLoader; // reaction equationデータのローダー
+
     std::vector<Species> speciesList; // Speciesのリスト
     float mouseX, mouseY; // マウスのx, y座標
 
