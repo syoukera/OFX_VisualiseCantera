@@ -110,8 +110,16 @@ void ofApp::draw(){
         float muStart = muDataLoader.getRow(startIndex)[i];
         float muEnd = muDataLoader.getRow(endIndex)[i];
 
+        float xStart = speciesList[startIndex].get_x();
+        float yStart  = speciesList[startIndex].get_y();
+        float xEnd   = speciesList[endIndex].get_x();
+        float yEnd   = speciesList[endIndex].get_y();
+
         // 反応物と生成物が選択されている時 = muの符号が異なる時
         if (muStart*muEnd < 0) {
+
+            // テストのために反応一つだけで描画
+            if (i > 2) continue;
 
             std::string reactionEquation = reactionEquationDataLoader.getLabel(i);
 
@@ -122,9 +130,17 @@ void ofApp::draw(){
             std::cout << i << " " << reactionEquation << " " << rop << " ";
             // std::cout << startIndex << " " << endIndex << " ";
             std::cout << muStart << " " << muEnd << std::endl;
+
+            ofSetColor(125, 125, 125); // Set the drawing color to white
+            ofFill();
+            ofSetLineWidth(2);
+            float heightRectangle = rop;
+
+            ofDrawRectangle(xStart, yStart - heightRectangle/2, abs(xStart - xEnd), heightRectangle); // 100 wide x 100 high, top left corner at (50, 50)
+            // ofRectangle myRect(0, 0, 100, 100);
+            // std::cout << startIndex << " " << endIndex << std::endl;
         }
     }
-    // std::cout << startIndex << " " << endIndex << std::endl;
 }
 
 void ofApp::mouseMoved(int x, int y){
