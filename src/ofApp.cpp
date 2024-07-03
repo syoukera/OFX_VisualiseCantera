@@ -38,8 +38,8 @@ void ofApp::setup(){
         ofLogError("ofApp::setup") << "Failed to load H2O2_mu.csv";
     }
 
-    if (!reactionEquationDataLoader.loadData("H2O2_ROP.csv")) {
-        ofLogError("ofApp::setup") << "Failed to load H2O2_ROP.csv";
+    if (!reactionEquationDataLoader.loadData("H2O2_reaction_equations.csv")) {
+        ofLogError("ofApp::setup") << "Failed to load H2O2_reaction_equations.csv";
     }
 
     // Speciesデータの読み込み
@@ -110,8 +110,19 @@ void ofApp::draw(){
         float muStart = muDataLoader.getRow(startIndex)[i];
         float muEnd = muDataLoader.getRow(endIndex)[i];
 
-        std::cout << i << " " << startIndex << " " << endIndex << " " 
-                  << muStart << " " << muEnd << std::endl;
+        // 反応物と生成物が選択されている時 = muの符号が異なる時
+        if (muStart*muEnd < 0) {
+
+            std::string reactionEquation = reactionEquationDataLoader.getLabel(i);
+
+            float rop = ropDataLoader.getRow(currentRow)[i];
+
+            // std::cout << "Follow this command: " << reactionEquation;
+
+            std::cout << i << " " << reactionEquation << " " << rop << " ";
+            // std::cout << startIndex << " " << endIndex << " ";
+            std::cout << muStart << " " << muEnd << std::endl;
+        }
     }
     // std::cout << startIndex << " " << endIndex << std::endl;
 }
