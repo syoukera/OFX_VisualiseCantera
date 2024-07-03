@@ -80,10 +80,10 @@ void ofApp::draw(){
     // StartのSpeciesを描画
     for (size_t i = 0; i < speciesList.size(); ++i) {
         if (speciesTogglesStart[i]) { // Startトグルボタンがオンの場合に描画
-            speciesList[i].draw(currentRow);
-            if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
-                speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
-            }
+            // speciesList[i].draw(currentRow);
+            // if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
+            //     speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
+            // }
             startIndex = i;
         }
     }
@@ -91,14 +91,13 @@ void ofApp::draw(){
     // EndのSpeciesを描画
     for (size_t i = 0; i < speciesList.size(); ++i) {
         if (speciesTogglesEnd[i]) { // Endトグルボタンがオンの場合に描画
-            speciesList[i].draw(currentRow);
-            if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
-                speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
-            }
+            // speciesList[i].draw(currentRow);
+            // if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
+            //     speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
+            // }
             endIndex = i;
         }
     }
-
 
     // データローダーからmuデータを読み込む
     size_t numRows = muDataLoader.getNumRows();
@@ -134,11 +133,33 @@ void ofApp::draw(){
             ofSetColor(125, 125, 125); // Set the drawing color to white
             ofFill();
             ofSetLineWidth(2);
-            float heightRectangle = rop;
+            float heightRectangle = log(rop*1000);
 
             ofDrawRectangle(xStart, yStart - heightRectangle/2, abs(xStart - xEnd), heightRectangle); // 100 wide x 100 high, top left corner at (50, 50)
             // ofRectangle myRect(0, 0, 100, 100);
             // std::cout << startIndex << " " << endIndex << std::endl;
+        }
+    }
+
+    // StartのSpeciesを描画
+    for (size_t i = 0; i < speciesList.size(); ++i) {
+        if (speciesTogglesStart[i]) { // Startトグルボタンがオンの場合に描画
+            speciesList[i].draw(currentRow);
+            if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
+                speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
+            }
+            // startIndex = i;
+        }
+    }
+
+    // EndのSpeciesを描画
+    for (size_t i = 0; i < speciesList.size(); ++i) {
+        if (speciesTogglesEnd[i]) { // Endトグルボタンがオンの場合に描画
+            speciesList[i].draw(currentRow);
+            if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
+                speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
+            }
+            // endIndex = i;
         }
     }
 }
