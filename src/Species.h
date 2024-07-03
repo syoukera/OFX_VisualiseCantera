@@ -13,6 +13,19 @@ public:
     void drawMouseOverInfo(float mouseX, float mouseY, int timeIndex) const;
     const std::string& getName() const; // getNameメソッドの追加
 
+    void set_x(float new_value) {
+        x = new_value;
+    }
+    float get_x(){
+        return x;
+    }
+    void set_y(float new_value) {
+        y = new_value;
+    }
+    float get_y(){
+        return y;
+    }
+
 	ofTrueTypeFont	verdana14;
 
 private:
