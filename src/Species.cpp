@@ -1,7 +1,8 @@
 #include "Species.h"
 
-Species::Species(const std::string& name, float x, float y, const std::vector<float>& molFractions)
-    : name(name), x(x), y(y), molFractions(molFractions) {
+Species::Species(const int index, const std::string& name, 
+                float x, float y, const std::vector<float>& molFractions)
+    : index(index), name(name), x(x), y(y), molFractions(molFractions) {
 
 	ofTrueTypeFont::setGlobalDpi(72);
 
@@ -30,11 +31,16 @@ void Species::draw(int timeIndex, float maxArea) const {
     float molFraction = molFractions[timeIndex];
     float area = ofMap(molFraction, 0, 1, 0, maxArea); // モル分率を0から10000の面積にマッピング
 	float radius = area2radius(area);
+
+    float noiseSeed = static_cast<float>(index+1);
+    // float noiseSeed = x;
+
+	float r = ofNoise(noiseSeed, noiseSeed*100)*255;
+	float g = ofNoise(noiseSeed*100, noiseSeed)*255;
+	float b = ofNoise(noiseSeed, noiseSeed*10000)*255;
     
-	float r = ofNoise(x, y)*255;
-	float g = ofNoise(x*100, y)*255;
-	float b = ofNoise(x, y*100)*255;
 	ofSetColor(r, g, b);
+    // std::cout << noiseSeed << " " << r << " " << g << " " << b << std::endl;
 
 	drawSmoothCircle(x, y, radius, numSegments); // 円を描画
 

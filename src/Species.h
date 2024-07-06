@@ -6,7 +6,7 @@
 
 class Species {
 public:
-    Species(const std::string& name, float x, float y, const std::vector<float>& molFractions);
+    Species(const int index, const std::string& name, float x, float y, const std::vector<float>& molFractions);
 
     void draw(int timeIndex, float maxArea) const;
     bool isMouseOver(float mouseX, float mouseY, int timeIndex) const;
@@ -34,6 +34,7 @@ public:
     
 
 private:
+    int index;
     std::string name; // 化学種の名前
     float x, y; // x, y座標
     const float radius_base = 10.0; // 背景となる白い円とマウスオーバーの判定に使用する半径
