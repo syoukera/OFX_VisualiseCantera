@@ -131,13 +131,9 @@ void ofApp::draw(){
             std::cout << muStart << " " << muEnd << std::endl;
 
             ofSetColor(125, 125, 125); // Set the drawing color to white
-            ofFill();
-            ofSetLineWidth(2);
-            float heightRectangle = log(rop*1000);
-
-            ofDrawRectangle(xStart, yStart - heightRectangle/2, abs(xStart - xEnd), heightRectangle); // 100 wide x 100 high, top left corner at (50, 50)
-            // ofRectangle myRect(0, 0, 100, 100);
-            // std::cout << startIndex << " " << endIndex << std::endl;
+            float lineWidth = log(rop*1000);
+            ofSetLineWidth(lineWidth);
+            ofDrawLine(xStart, yStart, xEnd, yEnd);
         }
     }
 
