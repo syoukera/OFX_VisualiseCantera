@@ -204,7 +204,7 @@ void ofApp::loadSpeciesData() {
             molFractions.push_back(moleFractionDataLoader.getRow(j)[i]);
         }
 
-        speciesList.emplace_back(name, x, y, molFractions);
+        speciesList.emplace_back(i, name, x, y, molFractions);
     }
 }
 
