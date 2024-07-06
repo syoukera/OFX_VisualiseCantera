@@ -12,6 +12,10 @@ public:
     bool isMouseOver(float mouseX, float mouseY, int timeIndex) const;
     void drawMouseOverInfo(float mouseX, float mouseY, int timeIndex) const;
     const std::string& getName() const; // getNameメソッドの追加
+    
+    void mousePressed(int x, int y, int button);
+    void mouseDragged(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
 
     void set_x(float new_value) {
         x = new_value;
@@ -27,13 +31,16 @@ public:
     }
 
 	ofTrueTypeFont	verdana14;
+    
 
 private:
     std::string name; // 化学種の名前
-    float x; // x座標
-    float y; // y座標
+    float x, y; // x, y座標
     const float radius_base = 10.0; // 背景となる白い円とマウスオーバーの判定に使用する半径
     std::vector<float> molFractions; // モル分率の時系列データ
+    
+    bool bDragging; // ドラッグしているかどうか
+    ofVec2f dragOffset; // ドラッグしているオフセット
 
 	float area2radius(float area) const;
     void drawSmoothCircle(float x, float y, float radius, int numSegments = 100) const; // スムーズな円を描く関数

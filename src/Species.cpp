@@ -69,6 +69,24 @@ const std::string& Species::getName() const {
     return name;
 }
 
+void Species::mousePressed(int x, int y, int button) {
+    if (isMouseOver(x, y, 0)) {
+        bDragging = true;
+        dragOffset.set(x - this->x, y - this->y);
+    }
+}
+
+void Species::mouseDragged(int x, int y, int button) {
+    if (bDragging) {
+        this->x = x - dragOffset.x;
+        this->y = y - dragOffset.y;
+    }
+}
+
+void Species::mouseReleased(int x, int y, int button) {
+    bDragging = false;
+}
+
 float Species::area2radius(float area) const {
 		float radius = std::sqrt(area/PI);
 		return radius;
