@@ -100,11 +100,13 @@ void ofApp::draw(){
     }
 
     // データローダーからmuデータを読み込む
-    size_t numRows = muDataLoader.getNumRows();
-    size_t numCols = muDataLoader.getRow(0).size();
+    size_t numSpecies = muDataLoader.getNumRows();
+    size_t numReactions = muDataLoader.getRow(0).size();
+
+    int numShownReactions = 0;
 
     // 仮のデータとしてSpeciesのリストを作成
-    for (size_t i = 0; i < numCols; ++i) {
+    for (size_t i = 0; i < numReactions; ++i) {
 
         float muStart = muDataLoader.getRow(startIndex)[i];
         float muEnd = muDataLoader.getRow(endIndex)[i];
@@ -114,26 +116,33 @@ void ofApp::draw(){
         float xEnd   = speciesList[endIndex].get_x();
         float yEnd   = speciesList[endIndex].get_y();
 
+        float strideLineHeight = 10.0;
+
         // 反応物と生成物が選択されている時 = muの符号が異なる時
         if (muStart*muEnd < 0) {
 
             // テストのために反応一つだけで描画
-            if (i > 2) continue;
+            // if (i > 2) continue;
 
             std::string reactionEquation = reactionEquationDataLoader.getLabel(i);
 
             float rop = ropDataLoader.getRow(currentRow)[i];
 
-            // std::cout << "Follow this command: " << reactionEquation;
+            ofSetColor(125, 125, 125); // Set the drawing color to white
+
+            float lineWidth = log(rop*1000);
+            ofSetLineWidth(lineWidth);
+
+            float lineHeightDiff = static_cast<float>(numShownReactions)*strideLineHeight;
+
+            ofDrawLine(xStart, yStart+lineHeightDiff, xEnd, yEnd+lineHeightDiff);
 
             std::cout << i << " " << reactionEquation << " " << rop << " ";
             // std::cout << startIndex << " " << endIndex << " ";
+            std::cout << numShownReactions << " " << lineHeightDiff << " ";
             std::cout << muStart << " " << muEnd << std::endl;
 
-            ofSetColor(125, 125, 125); // Set the drawing color to white
-            float lineWidth = log(rop*1000);
-            ofSetLineWidth(lineWidth);
-            ofDrawLine(xStart, yStart, xEnd, yEnd);
+            numShownReactions++;
         }
     }
 
