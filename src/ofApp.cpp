@@ -141,10 +141,12 @@ void ofApp::draw(){
         }
     }
 
+    float maxArea = 100000.0; // Speciesで描画される円の最大の面積
+
     // StartのSpeciesを描画
     for (size_t i = 0; i < speciesList.size(); ++i) {
         if (speciesTogglesStart[i]) { // Startトグルボタンがオンの場合に描画
-            speciesList[i].draw(currentRow);
+            speciesList[i].draw(currentRow, maxArea);
             if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
                 speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
             }
@@ -155,7 +157,7 @@ void ofApp::draw(){
     // EndのSpeciesを描画
     for (size_t i = 0; i < speciesList.size(); ++i) {
         if (speciesTogglesEnd[i]) { // Endトグルボタンがオンの場合に描画
-            speciesList[i].draw(currentRow);
+            speciesList[i].draw(currentRow, maxArea);
             if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
                 speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
             }
