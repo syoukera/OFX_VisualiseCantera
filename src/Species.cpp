@@ -5,13 +5,13 @@ Species::Species(const std::string& name, float x, float y, const std::vector<fl
 
 	ofTrueTypeFont::setGlobalDpi(72);
 
-	verdana14.load("verdana.ttf", 14, true, true);
+	verdana14.load("verdana.ttf", 20, true, true);
 	verdana14.setLineHeight(18.0f);
 	verdana14.setLetterSpacing(1.037);
 
 	}
 
-void Species::draw(int timeIndex) const {
+void Species::draw(int timeIndex, float maxArea) const {
     if (timeIndex < 0 || timeIndex >= molFractions.size()) {
         ofLogError("Species::draw") << "Time index out of bounds";
         return;
@@ -29,7 +29,7 @@ void Species::draw(int timeIndex) const {
     // draw color circle related to mole fraction
 
     float molFraction = molFractions[timeIndex];
-    float area = ofMap(molFraction, 0, 1, 0, 10000); // モル分率を0から10000の面積にマッピング
+    float area = ofMap(molFraction, 0, 1, 0, maxArea); // モル分率を0から10000の面積にマッピング
 	float radius = area2radius(area);
     
 	float r = ofNoise(x, y)*255;

@@ -8,7 +8,7 @@ class Species {
 public:
     Species(const std::string& name, float x, float y, const std::vector<float>& molFractions);
 
-    void draw(int timeIndex) const;
+    void draw(int timeIndex, float maxArea) const;
     bool isMouseOver(float mouseX, float mouseY, int timeIndex) const;
     void drawMouseOverInfo(float mouseX, float mouseY, int timeIndex) const;
     const std::string& getName() const; // getNameメソッドの追加
