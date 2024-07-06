@@ -17,22 +17,31 @@ void Species::draw(int timeIndex) const {
         return;
     }
 
-    float molFraction = molFractions[timeIndex];
-    float area = ofMap(molFraction, 0, 1, 0, 100000); // モル分率を0から50の半径にマッピング
-	float radius = area2radius(area);
 
+	int numSegments = 100;
+
+    // draw white circle
+    
+	float radius_white = 10;
+	ofSetColor(255);
+	drawSmoothCircle(x, y, radius_white, numSegments); // 円を描画
+
+    // draw color circle related to mole fraction
+
+    float molFraction = molFractions[timeIndex];
+    float area = ofMap(molFraction, 0, 1, 0, 10000); // モル分率を0から10000の面積にマッピング
+	float radius = area2radius(area);
+    
 	float r = ofNoise(x, y)*255;
 	float g = ofNoise(x*100, y)*255;
 	float b = ofNoise(x, y*100)*255;
 	ofSetColor(r, g, b);
 
-	int numSegments = 100;
-	drawSmoothCircle(x, y, radius, numSegments);
-    // ofDrawCircle(x, y, radius); // 円を描画
-	
+	drawSmoothCircle(x, y, radius, numSegments); // 円を描画
+
+    // draw species name
 	ofSetColor(0);
-	verdana14.drawString(name, x - radius, y - radius - 10);
-    // ofDrawBitmapString(name, x - radius, y - radius - 10); // 化学種の名前を描画
+	verdana14.drawString(name, x-7, y+7); // 化学種の名前を描画
 }
 
 bool Species::isMouseOver(float mouseX, float mouseY, int timeIndex) const {
