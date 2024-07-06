@@ -171,6 +171,24 @@ void ofApp::mouseMoved(int x, int y){
     mouseY = y;
 }
 
+void ofApp::mousePressed(int x, int y, int button){
+    for (auto& species : speciesList) {
+        species.mousePressed(x, y, button);
+    }
+}
+
+void ofApp::mouseDragged(int x, int y, int button){
+    for (auto& species : speciesList) {
+        species.mouseDragged(x, y, button);
+    }
+}
+
+void ofApp::mouseReleased(int x, int y, int button){
+    for (auto& species : speciesList) {
+        species.mouseReleased(x, y, button);
+    }
+}
+
 void ofApp::loadSpeciesData() {
     // データローダーからSpeciesデータを読み込む
     size_t numRows = moleFractionDataLoader.getNumRows();
