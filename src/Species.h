@@ -32,6 +32,7 @@ private:
     std::string name; // 化学種の名前
     float x; // x座標
     float y; // y座標
+    const float radius_base = 10.0; // 背景となる白い円とマウスオーバーの判定に使用する半径
     std::vector<float> molFractions; // モル分率の時系列データ
 
 	float area2radius(float area) const;

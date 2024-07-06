@@ -22,9 +22,8 @@ void Species::draw(int timeIndex, float maxArea) const {
 
     // draw white circle
     
-	float radius_white = 10;
 	ofSetColor(255);
-	drawSmoothCircle(x, y, radius_white, numSegments); // 円を描画
+	drawSmoothCircle(x, y, radius_base, numSegments); // 円を描画
 
     // draw color circle related to mole fraction
 
@@ -49,15 +48,10 @@ bool Species::isMouseOver(float mouseX, float mouseY, int timeIndex) const {
         return false;
     }
 
-    float molFraction = molFractions[timeIndex];
-    // float area = molFraction * 100.0f; // 仮のスケーリングファクタ
-    float area = ofMap(molFraction, 0, 1, 0, 100000); // モル分率を0から50の半径にマッピング
-    float radius = area2radius(area); // 面積を半径に変換
-
     float dx = mouseX - x;
     float dy = mouseY - y;
     float distance = sqrt(dx * dx + dy * dy);
-    return distance <= radius;
+    return distance <= radius_base;
 }
 
 void Species::drawMouseOverInfo(float mouseX, float mouseY, int timeIndex) const {
