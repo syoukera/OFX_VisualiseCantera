@@ -80,10 +80,6 @@ void ofApp::draw(){
     // StartのSpeciesを描画
     for (size_t i = 0; i < speciesList.size(); ++i) {
         if (speciesTogglesStart[i]) { // Startトグルボタンがオンの場合に描画
-            // speciesList[i].draw(currentRow);
-            // if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
-            //     speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
-            // }
             startIndex = i;
         }
     }
@@ -91,58 +87,54 @@ void ofApp::draw(){
     // EndのSpeciesを描画
     for (size_t i = 0; i < speciesList.size(); ++i) {
         if (speciesTogglesEnd[i]) { // Endトグルボタンがオンの場合に描画
-            // speciesList[i].draw(currentRow);
-            // if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
-            //     speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
-            // }
             endIndex = i;
-        }
-    }
 
-    // データローダーからmuデータを読み込む
-    size_t numSpecies = muDataLoader.getNumRows();
-    size_t numReactions = muDataLoader.getRow(0).size();
+            // データローダーからmuデータを読み込む
+            size_t numSpecies = muDataLoader.getNumRows();
+            size_t numReactions = muDataLoader.getRow(0).size();
 
-    int numShownReactions = 0;
+            int numShownReactions = 0;
 
-    // 仮のデータとしてSpeciesのリストを作成
-    for (size_t i = 0; i < numReactions; ++i) {
+            // 仮のデータとしてSpeciesのリストを作成
+            for (size_t i = 0; i < numReactions; ++i) {
 
-        float muStart = muDataLoader.getRow(startIndex)[i];
-        float muEnd = muDataLoader.getRow(endIndex)[i];
+                float muStart = muDataLoader.getRow(startIndex)[i];
+                float muEnd = muDataLoader.getRow(endIndex)[i];
 
-        float xStart = speciesList[startIndex].get_x();
-        float yStart  = speciesList[startIndex].get_y();
-        float xEnd   = speciesList[endIndex].get_x();
-        float yEnd   = speciesList[endIndex].get_y();
+                float xStart = speciesList[startIndex].get_x();
+                float yStart  = speciesList[startIndex].get_y();
+                float xEnd   = speciesList[endIndex].get_x();
+                float yEnd   = speciesList[endIndex].get_y();
 
-        float strideLineHeight = 10.0;
+                float strideLineHeight = 10.0;
 
-        // 反応物と生成物が選択されている時 = muの符号が異なる時
-        if (muStart*muEnd < 0) {
+                // 反応物と生成物が選択されている時 = muの符号が異なる時
+                if (muStart*muEnd < 0) {
 
-            // テストのために反応一つだけで描画
-            // if (i > 2) continue;
+                    // テストのために反応一つだけで描画
+                    // if (i > 2) continue;
 
-            std::string reactionEquation = reactionEquationDataLoader.getLabel(i);
+                    std::string reactionEquation = reactionEquationDataLoader.getLabel(i);
 
-            float rop = ropDataLoader.getRow(currentRow)[i];
+                    float rop = ropDataLoader.getRow(currentRow)[i];
 
-            ofSetColor(125, 125, 125); // Set the drawing color to white
+                    ofSetColor(125, 125, 125); // Set the drawing color to white
 
-            float lineWidth = log(rop*1000);
-            ofSetLineWidth(lineWidth);
+                    float lineWidth = log(rop*1000);
+                    ofSetLineWidth(lineWidth);
 
-            float lineHeightDiff = static_cast<float>(numShownReactions)*strideLineHeight;
+                    float lineHeightDiff = static_cast<float>(numShownReactions)*strideLineHeight;
 
-            ofDrawLine(xStart, yStart+lineHeightDiff, xEnd, yEnd+lineHeightDiff);
+                    ofDrawLine(xStart, yStart+lineHeightDiff, xEnd, yEnd+lineHeightDiff);
 
-            std::cout << i << " " << reactionEquation << " " << rop << " ";
-            // std::cout << startIndex << " " << endIndex << " ";
-            std::cout << numShownReactions << " " << lineHeightDiff << " ";
-            std::cout << muStart << " " << muEnd << std::endl;
+                    std::cout << i << " " << reactionEquation << " " << rop << " ";
+                    // std::cout << startIndex << " " << endIndex << " ";
+                    std::cout << numShownReactions << " " << lineHeightDiff << " ";
+                    std::cout << muStart << " " << muEnd << std::endl;
 
-            numShownReactions++;
+                    numShownReactions++;
+                }
+            }
         }
     }
 
@@ -155,7 +147,6 @@ void ofApp::draw(){
             if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
                 speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
             }
-            // startIndex = i;
         }
     }
 
@@ -166,7 +157,6 @@ void ofApp::draw(){
             if (speciesList[i].isMouseOver(mouseX, mouseY, currentRow)) {
                 speciesList[i].drawMouseOverInfo(mouseX, mouseY, currentRow);
             }
-            // endIndex = i;
         }
     }
 }
@@ -174,7 +164,7 @@ void ofApp::draw(){
 void ofApp::mouseMoved(int x, int y){
     mouseX = x;
     mouseY = y;
-}
+}   
 
 void ofApp::mousePressed(int x, int y, int button){
     for (auto& species : speciesList) {
@@ -269,7 +259,7 @@ void ofApp::toggleChangedEnd(bool & value, int index) {
     if (value) {
         for (size_t i = 0; i < speciesTogglesEnd.size(); ++i) {
             if (i != index) {
-                speciesTogglesEnd[i].setWithoutEventNotifications(false); // 他のトグルをオフにする
+                // speciesTogglesEnd[i].setWithoutEventNotifications(false); // 他のトグルをオフにする
             }
         }
         ofLogNotice("ofApp") << "End Toggle changed: Only one end species can be active at a time";
