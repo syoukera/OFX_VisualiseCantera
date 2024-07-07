@@ -17,18 +17,10 @@ public:
     void mouseDragged(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
 
-    void set_x(float new_value) {
-        x = new_value;
-    }
-    float get_x(){
-        return x;
-    }
-    void set_y(float new_value) {
-        y = new_value;
-    }
-    float get_y(){
-        return y;
-    }
+    void setX(float new_value) { x = new_value; }
+    float getX() const { return x; }
+    void setY(float new_value) { y = new_value; }
+    float getY() const { return y; }
 
 	ofTrueTypeFont	verdana14;
     
