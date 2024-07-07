@@ -101,10 +101,10 @@ void ofApp::draw(){
                 float muStart = muDataLoader.getRow(startIndex)[i];
                 float muEnd = muDataLoader.getRow(endIndex)[i];
 
-                float xStart = speciesList[startIndex].get_x();
-                float yStart  = speciesList[startIndex].get_y();
-                float xEnd   = speciesList[endIndex].get_x();
-                float yEnd   = speciesList[endIndex].get_y();
+                float xStart = speciesList[startIndex].getX();
+                float yStart  = speciesList[startIndex].getX();
+                float xEnd   = speciesList[endIndex].getX();
+                float yEnd   = speciesList[endIndex].getY();
 
                 float strideLineHeight = 10.0;
 
