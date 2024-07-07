@@ -44,7 +44,10 @@ void ofApp::setup(){
 
     // Speciesデータの読み込み
     loadSpeciesData();
-    
+
+    // Reactionクラスの初期化
+    reaction = std::make_unique<Reaction>(speciesList);
+
     // GUIの設定
     setupGui();
     
@@ -102,7 +105,7 @@ void ofApp::draw(){
                 float muEnd = muDataLoader.getRow(endIndex)[i];
 
                 float xStart = speciesList[startIndex].getX();
-                float yStart  = speciesList[startIndex].getX();
+                float yStart  = speciesList[startIndex].getY();
                 float xEnd   = speciesList[endIndex].getX();
                 float yEnd   = speciesList[endIndex].getY();
 
@@ -118,19 +121,14 @@ void ofApp::draw(){
 
                     float rop = ropDataLoader.getRow(currentRow)[i];
 
-                    ofSetColor(125, 125, 125); // Set the drawing color to white
+                    reaction->draw(startIndex, endIndex, currentRow, rop, numShownReactions);
 
-                    float lineWidth = log(rop*1000);
-                    ofSetLineWidth(lineWidth);
-
-                    float lineHeightDiff = static_cast<float>(numShownReactions)*strideLineHeight;
-
-                    ofDrawLine(xStart, yStart+lineHeightDiff, xEnd, yEnd+lineHeightDiff);
-
-                    std::cout << i << " " << reactionEquation << " " << rop << " ";
+                    std::cout << i;
+                    std::cout <<  " " << reactionEquation << " " << rop << " ";
                     // std::cout << startIndex << " " << endIndex << " ";
-                    std::cout << numShownReactions << " " << lineHeightDiff << " ";
-                    std::cout << muStart << " " << muEnd << std::endl;
+                    // std::cout << " " << xStart << " " << yStart << " " << xEnd << " " << yEnd;
+                    // std::cout << numShownReactions << " " << lineHeightDiff << " ";
+                    // std::cout << muStart << " " << muEnd << std::endl;
 
                     numShownReactions++;
                 }

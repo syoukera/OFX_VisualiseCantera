@@ -4,6 +4,7 @@
 #include "ofxGui.h"
 #include "BaseLoader.h"
 #include "Species.h"
+#include "Reaction.h"
 #include <vector>
 #include <string>
 
@@ -36,6 +37,8 @@ private:
 
     std::vector<Species> speciesList; // Speciesのリスト
     float mouseX, mouseY; // マウスのx, y座標
+
+    std::unique_ptr<Reaction> reaction;
 
     ofxPanel gui; // GUIパネル
     std::vector<ofParameter<bool>> speciesTogglesStart; // Start化学種の表示切替用トグルボタン
