@@ -11,4 +11,7 @@ public:
 
 private:
     const std::vector<Species>& speciesList;
+
+    float foldRadious = 60.0;
+    float edgeRadious = 30.0;
 };

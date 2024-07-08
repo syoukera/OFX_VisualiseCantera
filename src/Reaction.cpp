@@ -12,12 +12,29 @@ void Reaction::draw(int startIdx, int endIdx, int currentRow, float lineWidth, f
     const Species& startSpecies = speciesList[startIdx];
     const Species& endSpecies = speciesList[endIdx];
 
-    float startX = startSpecies.getX();
-    float startY = startSpecies.getY();
-    float endX = endSpecies.getX();
-    float endY = endSpecies.getY();
+    // get x, y at start point
+    float startSpeciesX = startSpecies.getX();
+    float startSpeciesY = startSpecies.getY();
 
+    // get x, y at end point
+    float endSpeciesX = endSpecies.getX();
+    float endSpeciesY = endSpecies.getY();
+
+    // get x, y at fold point on start species
+    float startTheta = asin(lineHeight/foldRadious);
+    float startFoldX = startSpeciesX + foldRadious*cos(startTheta);
+    float startFoldY = startSpeciesY + foldRadious*sin(startTheta);
+
+    // get x, y at fold point on end species
+    float endTheta = asin(lineHeight/foldRadious);
+    float endFoldX = endSpeciesX - foldRadious*cos(endTheta);
+    float endFoldY = endSpeciesY + foldRadious*sin(endTheta);
+
+    // get x, y at start point
+
+    // get x, y at end point
+    
 	ofSetColor(125, 125, 125); // Set the drawing color to white
 	ofSetLineWidth(lineWidth);
-	ofDrawLine(startX, startY+lineHeight, endX, endY+lineHeight);
+	ofDrawLine(startFoldX, startFoldY, endFoldX, endFoldY);
 }
