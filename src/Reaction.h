@@ -7,7 +7,7 @@ class Reaction {
 public:
     Reaction(const std::vector<Species>& speciesList);
 
-    void draw(int startIdx, int endIdx, int currentRow, float rop, int numShownReactions) const;
+    void draw(int startIdx, int endIdx, int currentRow, float lineWidth, float lineHeight) const;
 
 private:
     const std::vector<Species>& speciesList;
