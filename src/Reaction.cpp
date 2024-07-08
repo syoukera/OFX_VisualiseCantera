@@ -31,10 +31,25 @@ void Reaction::draw(int startIdx, int endIdx, int currentRow, float lineWidth, f
     float endFoldY = endSpeciesY + foldRadious*sin(endTheta);
 
     // get x, y at start point
+    float startEdgeX = startSpeciesX + edgeRadious*cos(startTheta);
+    float startEdgeY = startSpeciesY + edgeRadious*sin(startTheta);
 
     // get x, y at end point
+    float endEdgeX = endSpeciesX - edgeRadious*cos(endTheta);
+    float endEdgeY = endSpeciesY + edgeRadious*sin(endTheta);
     
 	ofSetColor(125, 125, 125); // Set the drawing color to white
 	ofSetLineWidth(lineWidth);
+
+    // ofBeginShape();
+
+    // ofVertex(startEdgeX, startEdgeY);
+    // ofVertex(startFoldX, startFoldY);
+    // ofVertex(endFoldX, endFoldY);
+    // ofVertex(endEdgeX, endEdgeY);
+    // ofEndShape(false);
+
+	ofDrawLine(startEdgeX, startEdgeY, startFoldX, startFoldY);
 	ofDrawLine(startFoldX, startFoldY, endFoldX, endFoldY);
+	ofDrawLine(endFoldX, endFoldY, endEdgeX, endEdgeY);
 }
