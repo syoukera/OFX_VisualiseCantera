@@ -39,6 +39,8 @@ private:
     float mouseX, mouseY; // マウスのx, y座標
 
     std::unique_ptr<Reaction> reaction;
+    float strideLineHeight = 10.0;
+    float rop2lineWidth = 1e3;
 
     ofxPanel gui; // GUIパネル
     std::vector<ofParameter<bool>> speciesTogglesStart; // Start化学種の表示切替用トグルボタン

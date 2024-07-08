@@ -121,7 +121,12 @@ void ofApp::draw(){
 
                     float rop = ropDataLoader.getRow(currentRow)[i];
 
-                    reaction->draw(startIndex, endIndex, currentRow, rop, numShownReactions);
+                    ofSetColor(125, 125, 125); // Set the drawing color to white
+
+                    float lineWidth = log(rop*rop2lineWidth);
+	                float lineHeight = static_cast<float>(numShownReactions)*strideLineHeight;
+
+                    reaction->draw(startIndex, endIndex, currentRow, lineWidth, lineHeight);
 
                     std::cout << i;
                     std::cout <<  " " << reactionEquation << " " << rop << " ";
